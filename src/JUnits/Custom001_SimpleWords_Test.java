@@ -1,12 +1,5 @@
 package JUnits;
 
-/**
- * Created by IntelliJ IDEA.
- * File Name: Custom001_SimpleWords_Test.java
- * User: Ratchapong T.
- * Date: 29-Mar-2016
- * Time: 5:11 PM
- */
 import Solutions.*;
 import org.junit.*;
 
@@ -14,6 +7,13 @@ import java.util.*;
 
 import static org.junit.Assert.*;
 
+/**
+ * Created by IntelliJ IDEA.
+ * File Name: Custom001_SimpleWords_Test.java
+ * User: Ratchapong T.
+ * Date: 29-Mar-2016
+ * Time: 5:11 PM
+ */
 public class Custom001_SimpleWords_Test {
     private Custom002_SimpleWords custom002_simpleWords;
     private Set<String> wordSet;

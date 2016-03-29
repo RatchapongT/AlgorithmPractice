@@ -17,14 +17,9 @@ public class Custom001_WordAbbreviation {
     class TrieNode {
         public int numOfChildren;
         public TrieNode[] children = new TrieNode[26];
-        public TrieNode() {
-        }
     }
 
     public class Trie {
-        public Trie() {
-        }
-
         public void insert(String word, TrieNode root) {
             for (int i = 0; i < word.length(); i++) {
                 char c = word.charAt(i);
