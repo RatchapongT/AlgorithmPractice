@@ -76,7 +76,7 @@ public class Custom001_WordAbbreviation {
 
         for (String word : wordList) {
             String compressed = "" + word.charAt(0) + word.length() + word.charAt(word.length() - 1);
-            resultList.add(trie.search(word, h.get(compressed)) + " ");
+            resultList.add(trie.search(word, h.get(compressed)) + "");
         }
         return resultList;
     }
