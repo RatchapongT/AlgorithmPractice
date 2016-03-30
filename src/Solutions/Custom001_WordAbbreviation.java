@@ -70,7 +70,7 @@ public class Custom001_WordAbbreviation {
 
     public List<String> abbreviation(List<String> wordList) {
         String compressed;
-        HashMap<String, Trie> map = new HashMap<>();
+        Map<String, Trie> map = new HashMap<>();
         List<String> resultList = new ArrayList<>();
 
         //Construct multiple Tries based on simple abbreviation key
