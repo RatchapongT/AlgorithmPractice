@@ -20,63 +20,69 @@ public class Custom001_WordAbbreviation {
     }
 
     public class Trie {
-        public void insert(String word, TrieNode root) {
+        public TrieNode root;
+        public Trie() {
+            this.root = new TrieNode();
+        }
+        public void insert(String word) {
+            TrieNode currentNode = root;
             for (int i = 0; i < word.length(); i++) {
                 char c = word.charAt(i);
-                if (root.children[c - 'a'] == null) {
-                    root.numOfChildren++;
-                    root.children[c - 'a'] = new TrieNode();
+                if (currentNode.children[c - 'a'] == null) {
+                    currentNode.numOfChildren++;
+                    currentNode.children[c - 'a'] = new TrieNode();
                 }
-                root = root.children[c - 'a'];
+                currentNode = currentNode.children[c - 'a'];
             }
         }
 
-        public String search(String word, TrieNode root) {
-            TrieNode tmp = root;
-            TrieNode node = tmp;
+        public String abbreviate(String word) {
+            String compressed;
+            TrieNode currentNode = root;
+            TrieNode lowestSplit = currentNode;
             StringBuilder sb = new StringBuilder();
 
             for (int i = 0; i < word.length(); i++) {
                 char c = word.charAt(i);
-                if (tmp.numOfChildren > 1) node = tmp;
-                if (i == word.length() - 1 && node == root) {
-                    String compressed = "" + word.charAt(0) + word.length() + word.charAt(word.length() - 1);
-                    if (compressed.length() >= word.length()) return word;
-                    else return compressed;
+                if (currentNode.numOfChildren > 1) {
+                    lowestSplit = currentNode;
                 }
-                tmp = tmp.children[c - 'a'];
+                currentNode = currentNode.children[c - 'a'];
             }
 
+            currentNode = root;
 
+            //Break at lowest split
             for (int i = 0; i < word.length(); i++) {
                 char c = word.charAt(i);
-                if (root != node) {
+                if (currentNode != lowestSplit) {
                     sb.append(c);
-                    root = root.children[c - 'a'];
+                    currentNode = currentNode.children[c - 'a'];
                 } else {
                     sb.append(c);
                     break;
                 }
             }
-            String compressed = sb.toString() + word.length() + word.charAt(word.length() - 1);
-
+            compressed = sb.toString() + word.length() + word.charAt(word.length() - 1);
             return compressed.length() >= word.length() ? word : compressed;
         }
     }
 
     public List<String> abbreviation(List<String> wordList) {
-        Trie trie = new Trie();
-        HashMap<String, TrieNode> h = new HashMap<>();
+        String compressed;
+        HashMap<String, Trie> map = new HashMap<>();
         List<String> resultList = new ArrayList<>();
+
+        //Construct multiple Tries based on simple abbreviation key
         for (String word : wordList) {
-            String compressed = "" + word.charAt(0) + word.length() + word.charAt(word.length() - 1);
-            if (!h.containsKey(compressed)) h.put(compressed, new TrieNode());
-            trie.insert(word, h.get(compressed));
+            compressed = "" + word.charAt(0) + word.length() + word.charAt(word.length() - 1);
+            if (!map.containsKey(compressed)) map.put(compressed, new Trie());
+            map.get(compressed).insert(word);
         }
 
         for (String word : wordList) {
-            String compressed = "" + word.charAt(0) + word.length() + word.charAt(word.length() - 1);
-            resultList.add(trie.search(word, h.get(compressed)) + "");
+            compressed = "" + word.charAt(0) + word.length() + word.charAt(word.length() - 1);
+            resultList.add(map.get(compressed).abbreviate(word));
         }
         return resultList;
     }
