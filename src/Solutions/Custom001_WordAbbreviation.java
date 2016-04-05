@@ -42,6 +42,7 @@ public class Custom001_WordAbbreviation {
             TrieNode lowestSplit = currentNode;
             StringBuilder sb = new StringBuilder();
 
+            //Find lowest split
             for (int i = 0; i < word.length(); i++) {
                 char c = word.charAt(i);
                 if (currentNode.numOfChildren > 1) {

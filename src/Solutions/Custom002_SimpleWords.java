@@ -10,6 +10,41 @@ import java.util.*;
  * Time: 11:47 PM
  */
 public class Custom002_SimpleWords {
+
+    public String[] simpleWords(String[] words) {
+        Set<String> set = new HashSet<>(Arrays.asList(words));
+        Set<String> answer = new HashSet<>();
+        for (String word : set) {
+            if (!simpleWordsHelper(word, set)) {
+                answer.add(word);
+            }
+        }
+        return answer.toArray(new String[answer.size()]);
+    }
+
+    public boolean simpleWordsHelper(String s, Set<String> dict) {
+        int minLen = Integer.MAX_VALUE;
+        int maxLen = Integer.MIN_VALUE;
+        for (String word : dict) {
+            minLen = Math.min(minLen, word.length());
+            maxLen = Math.max(maxLen, word.length());
+        }
+        boolean[] found = new boolean[s.length() + 1];
+        found[0] = true;
+        for (int i = minLen; i <= s.length(); i++) {
+            for (int j = 0; j < i; j++) {
+                if ((i - j) < maxLen || !found[j]) continue;
+                String substring = s.substring(j, i);
+                boolean same = substring.equals(s);
+                if (dict.contains(substring) && !same) {
+                    found[i] = true;
+                    break;
+                }
+            }
+        }
+        return found[s.length()];
+    }
+
     public Set<String> simpleWords_DP(Set<String> wordSet) {
         Set<String> simpleWordsSet = new HashSet<>();
         for (String word : wordSet) {
