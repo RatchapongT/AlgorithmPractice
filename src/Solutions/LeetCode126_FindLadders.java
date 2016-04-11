@@ -12,18 +12,15 @@ public class LeetCode126_FindLadders {
         Map<String, List<List<String>>> thisLevel = new HashMap<>();
         Map<String, List<List<String>>> lastLevel = new HashMap<>();
 
-        thisLevel.put(beginWord, new ArrayList<>());
-        lastLevel.put(endWord, new ArrayList<>());
+        thisLevel.put(beginWord, new LinkedList<>());
+        lastLevel.put(endWord, new LinkedList<>());
 
-        thisLevel.get(beginWord).add(new ArrayList<>());
-        lastLevel.get(endWord).add(new ArrayList<>());
-
-        thisLevel.get(beginWord).get(0).add(beginWord);
-        lastLevel.get(endWord).get(0).add(endWord);
+        thisLevel.get(beginWord).add(Arrays.asList(beginWord));
+        lastLevel.get(endWord).add(Arrays.asList(endWord));
 
         wordList.remove(beginWord);
         wordList.remove(endWord);
-        List<List<String>> resultList = new ArrayList<>();
+        List<List<String>> resultList = new LinkedList<>();
         while (thisLevel.size() != 0) {
             Map<String, List<List<String>>> nextLevel = new HashMap<>();
             Map<String, List<List<String>>> temp;
@@ -50,11 +47,11 @@ public class LeetCode126_FindLadders {
                                 list1 = list2;
                                 list2 = tempList;
                             }
-                            for (int j = 0; j < list1.size(); j++) {
-                                for (int k = 0; k < list2.size(); k++) {
-                                    List<String> result = new ArrayList<String>(list1.get(j));
-                                    for (int l = list2.get(k).size() - 1; l >= 0; l--) {
-                                        result.add(list2.get(k).get(l));
+                            for (List<String> l1 : list1) {
+                                for (List<String> l2 : list2) {
+                                    List<String> result = new LinkedList<String>(l1);
+                                    for (int l = l2.size() - 1; l >= 0; l--) {
+                                        result.add(l2.get(l));
                                     }
                                     resultList.add(result);
                                 }
@@ -62,7 +59,7 @@ public class LeetCode126_FindLadders {
                             found = true;
                         } else if (!found && wordList.contains(queryWord)) {
                             if (!nextLevel.containsKey(queryWord)) {
-                                nextLevel.put(queryWord, new ArrayList<>());
+                                nextLevel.put(queryWord, new LinkedList<>());
                             }
                             for (List<String> list : thisLevel.get(key)) {
                                 List<String> newList = new LinkedList<>(list);
