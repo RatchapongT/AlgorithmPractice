@@ -24,7 +24,7 @@ public class LeetCode126_FindLadders {
         wordList.remove(beginWord);
         wordList.remove(endWord);
         List<List<String>> resultList = new ArrayList<>();
-        while (thisLevel.size() != 0 && lastLevel.size() != 0) {
+        while (thisLevel.size() != 0) {
             Map<String, List<List<String>>> nextLevel = new HashMap<>();
             Set<String> visited = new HashSet<String>();
             Map<String, List<List<String>>> temp;
